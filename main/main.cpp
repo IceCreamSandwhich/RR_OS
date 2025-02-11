@@ -71,7 +71,7 @@ extern "C" void app_main(void)
     // Initialising LED
 
     initialise_led();
-    set_led_color(0xFF0000);
+    set_led_color(INDEPENDENT_COLOR);
 
 
     while (1)
@@ -90,6 +90,6 @@ extern "C" void app_main(void)
         //     }
         // }
         rr_os_event_handler();
-        vTaskDelay(1000 / portTICK_PERIOD_MS);
+        vTaskDelay(10 / portTICK_PERIOD_MS);
     }
 }

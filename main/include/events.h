@@ -4,15 +4,18 @@
 
 typedef enum EVENTS {
     EVENT_NONE = 0,
-    EVENT_CONNECTION
+    EVENT_CONNECTION,
+    EVENT_DISCONNECT_REQUEST,
+    EVENT_DISCONNECT,
 } event_t;
 
 typedef struct state_t {
     bool twai_active;
     bool connected;
+    uint32_t last_isr_time;
 } state_t;
 
-static state_t state;
+extern state_t state;
 
 void initialise_events();
 void add_event(event_t event);

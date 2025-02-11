@@ -5,6 +5,7 @@
 #include "include/led.h"
 
 static QueueHandle_t event_queue;
+state_t state;
 
 void initialise_events() {
     event_queue = xQueueCreate(10, sizeof(event_t));
@@ -19,6 +20,7 @@ void rr_os_event_handler()
     event_t event;
     if (xQueueReceive(event_queue, &event, 0))
     {
+        ESP_LOGI("Events", "Event %d added to queue", event);
         switch (event)
         {
         case EVENT_CONNECTION:
@@ -26,7 +28,21 @@ void rr_os_event_handler()
             // Disable the interrupt to prevent triggering on TWAI comms
             gpio_set_intr_type(TWAI_RX, GPIO_INTR_DISABLE);
             state.connected = true;
-            set_led_color(0x0000FF);
+            set_led_color(CONNECTED_COLOR);
+            // TODO: Remove this just for debugging
+            add_event(EVENT_DISCONNECT_REQUEST);
+            break;
+        case EVENT_DISCONNECT_REQUEST:
+            ESP_LOGI(TAG, "Disconnect request event detected");
+            // Enable the interrupt on falling edge to detect disconnect
+            gpio_set_intr_type(TWAI_RX, GPIO_INTR_NEGEDGE);
+            break;
+        case EVENT_DISCONNECT:
+            ESP_LOGI(TAG, "Disconnect event detected");
+            set_led_color(INDEPENDENT_COLOR);
+            // Change interrupt to rising edge
+            state.connected = false;
+            gpio_set_intr_type(TWAI_RX, GPIO_INTR_POSEDGE);
             break;
         default:
             break;

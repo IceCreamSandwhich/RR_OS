@@ -62,7 +62,19 @@ void twai_listener(void)
 
 static void IRAM_ATTR twai_service_isr_handler(void *arg)
 {
-    add_event(EVENT_CONNECTION);
+    if (xTaskGetTickCount() - state.last_isr_time < pdMS_TO_TICKS(100))
+    {
+        return;
+    }
+    state.last_isr_time = xTaskGetTickCount();
+    if (state.connected)
+    {
+        add_event(EVENT_DISCONNECT);
+    }
+    else
+    {
+        add_event(EVENT_CONNECTION);
+    }
 }
 
 void twai_interrupt_init()
