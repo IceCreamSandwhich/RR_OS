@@ -1,4 +1,4 @@
-#include "./include/twai_service.h"
+#include "include/twai_service.h"
 
 #define TAG "TWAI Service"
 
@@ -39,4 +39,19 @@ void create_msg(twai_message_t *msg, uint32_t id, uint8_t data)
     msg->identifier = id;
     msg->data_length_code = 1;
     msg->data[0] = data;
+}
+
+void twai_listener(void)
+{
+    twai_message_t message;
+    if (twai_receive(&message, pdMS_TO_TICKS(10000)) == ESP_OK)
+    {
+        ESP_LOGI(TAG, "Message received");
+        ESP_LOGI(TAG, "ID: 0x%lx", message.identifier);
+    }
+    else
+    {
+        printf("Failed to receive message\n");
+        return;
+    }
 }
