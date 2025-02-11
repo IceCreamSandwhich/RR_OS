@@ -19,7 +19,7 @@
 #include "include/encoder.h"
 #include "include/uros_service.h"
 #include "BNO08x.hpp"
-#include "led_indicator.h"
+#include "led.hpp"
 
 static const constexpr char *TAG = "Main";
 
@@ -84,45 +84,54 @@ extern "C" void app_main(void)
 
 
 
-    led_strip_config_t strip_config = {
-        .strip_gpio_num = 21,              // The GPIO that connected to the LED strip's data line
-        .max_leds = 1,                  // The number of LEDs in the strip,
-        .led_pixel_format = LED_PIXEL_FORMAT_GRB,       // Pixel format of your LED strip
-        .led_model = LED_MODEL_WS2812,                  // LED strip model
-        // .flags.invert_out = false,                      // whether to invert the output signal
-    };
+    // led_strip_config_t strip_config = {
+    //     .strip_gpio_num = 21,              // The GPIO that connected to the LED strip's data line
+    //     .max_leds = 1,                  // The number of LEDs in the strip,
+    //     .led_pixel_format = LED_PIXEL_FORMAT_GRB,       // Pixel format of your LED strip
+    //     .led_model = LED_MODEL_WS2812,                  // LED strip model
+    //     // .flags.invert_out = false,                      // whether to invert the output signal
+    // };
 
-    // LED strip backend configuration: RMT
-    led_strip_rmt_config_t rmt_config = {
-        .clk_src = RMT_CLK_SRC_DEFAULT,        // different clock source can lead to different power consumption
-        .resolution_hz = 10 * 1000 * 1000
-        // .flags.with_dma = false,
-    };
+    // // LED strip backend configuration: RMT
+    // led_strip_rmt_config_t rmt_config = {
+    //     .clk_src = RMT_CLK_SRC_DEFAULT,        // different clock source can lead to different power consumption
+    //     .resolution_hz = 10 * 1000 * 1000
+    //     // .flags.with_dma = false,
+    // };
 
-    led_indicator_strips_config_t strips_config = {
-        .led_strip_cfg = strip_config,
-        .led_strip_driver = LED_STRIP_RMT,
-        .led_strip_rmt_cfg = rmt_config,
-    };
+    // led_indicator_strips_config_t strips_config = {
+    //     .led_strip_cfg = strip_config,
+    //     .led_strip_driver = LED_STRIP_RMT,
+    //     .led_strip_rmt_cfg = rmt_config,
+    // };
 
-    const led_indicator_config_t config = {
-        .mode = LED_STRIPS_MODE,
-        .led_indicator_strips_config = &strips_config,
-        .blink_lists = NULL,
-        .blink_list_num = 0,
-    };
+    // const led_indicator_config_t config = {
+    //     .mode = LED_STRIPS_MODE,
+    //     .led_indicator_strips_config = &strips_config,
+    //     .blink_lists = NULL,
+    //     .blink_list_num = 0,
+    // };
 
-    led_indicator_handle_t led = led_indicator_create(&config);
-    led_indicator_set_brightness(led, 1);
-    led_indicator_set_rgb(led, 0x00FF00);
+    // led_indicator_handle_t led = led_indicator_create(&config);
+    // led_indicator_set_brightness(led, 1);
+    // led_indicator_set_rgb(led, 0x00FF00);
+    // vTaskDelay(1000 / portTICK_PERIOD_MS);
+    // led_indicator_set_rgb(led, 0xFF0000);
+    // vTaskDelay(1000 / portTICK_PERIOD_MS);
+    // led_indicator_set_rgb(led, 0x0000FF);
+    // vTaskDelay(1000 / portTICK_PERIOD_MS);
+    // led_indicator_set_rgb(led, 0x000000);
+    // vTaskDelay(1000 / portTICK_PERIOD_MS);
+
+
+    initialise_led();
+    set_led_color(0x00FF00);
     vTaskDelay(1000 / portTICK_PERIOD_MS);
-    led_indicator_set_rgb(led, 0xFF0000);
+    set_led_color(0xFF0000);
     vTaskDelay(1000 / portTICK_PERIOD_MS);
-    led_indicator_set_rgb(led, 0x0000FF);
+    set_led_color(0x0000FF);
     vTaskDelay(1000 / portTICK_PERIOD_MS);
-    led_indicator_set_rgb(led, 0x000000);
-    vTaskDelay(1000 / portTICK_PERIOD_MS);
-    
+    set_led_color(0x000000);
 
 
     while (1)
