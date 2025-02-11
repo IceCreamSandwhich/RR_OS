@@ -1,5 +1,6 @@
-#include "include/twai_service.h"
 #include "driver/gpio.h"
+#include "include/twai_service.h"
+#include "include/events.h"
 
 #define TAG "TWAI Service"
 
@@ -58,3 +59,22 @@ void twai_listener(void)
     }
 }
 
+
+static void IRAM_ATTR twai_service_isr_handler(void *arg)
+{
+    add_event(EVENT_CONNECTION);
+}
+
+void twai_interrupt_init()
+{
+    // Set the TWAI RX pin as an input pin
+    // gpio_pad_select_gpio(TWAI_RX);
+    gpio_set_direction(TWAI_RX, GPIO_MODE_INPUT);
+    gpio_set_pull_mode(TWAI_RX, GPIO_PULLDOWN_ONLY);
+    // Set the TWAI RX pin as an interrupt pin
+    gpio_set_intr_type(TWAI_RX, GPIO_INTR_POSEDGE);
+    // Install the driver's GPIO ISR handler service, which allows per-pin GPIO interrupt handlers
+    gpio_install_isr_service(0);
+    // Hook up the TWAI RX pin to the ISR handler
+    gpio_isr_handler_add(TWAI_RX, twai_service_isr_handler, NULL);
+}

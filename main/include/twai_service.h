@@ -27,4 +27,4 @@ void twai_service_msg_receive(twai_message_t *msg);
 
 void create_msg(twai_message_t *msg, uint32_t id, uint8_t data);
 
-// void IRAM_ATTR twai_service_isr_handler(void *arg);
+void twai_interrupt_init();
