@@ -24,6 +24,16 @@ static const constexpr char *TAG = "Main";
 
 #define IMU_ENABLE false
 
+static bool twai_active = false;
+static bool twai_event = false;
+
+static void IRAM_ATTR twai_service_isr_handler(void *arg)
+{
+    if (twai_active) return;
+    twai_event = true;
+    gpio_set_intr_type(TWAI_RX, GPIO_INTR_DISABLE);
+}
+
 
 
 extern "C" void app_main(void)
@@ -55,22 +65,38 @@ extern "C" void app_main(void)
     // uros_service(); //TODO: Figure out how to pass parameters to this function
 
     initialise_drivetrain();
-    twai_service_init();
-    twai_service_start();
+    // twai_service_init();
 
 
+    // Set the TWAI RX pin as an input pin
+    // gpio_pad_select_gpio(TWAI_RX);
+    gpio_set_direction(TWAI_RX, GPIO_MODE_INPUT);
+    gpio_set_pull_mode(TWAI_RX, GPIO_PULLDOWN_ONLY);
     // Set the TWAI RX pin as an interrupt pin
-    gpio_set_intr_type(TWAI_RX, GPIO_INTR_ANYEDGE);
+    gpio_set_intr_type(TWAI_RX, GPIO_INTR_POSEDGE);
+    // Install the driver's GPIO ISR handler service, which allows per-pin GPIO interrupt handlers
+    gpio_install_isr_service(0);
+    // Hook up the TWAI RX pin to the ISR handler
+    gpio_isr_handler_add(TWAI_RX, twai_service_isr_handler, NULL);
     
 
 
     while (1)
     {
-        ESP_LOGI(TAG, "Moving forward");
-        set_motor_speed(left_motor, 1024, true);
-        vTaskDelay(1000 / portTICK_PERIOD_MS);
-        ESP_LOGI(TAG, "Moving backward");
-        set_motor_speed(left_motor, 0, true);
+        if (twai_event)
+        {
+            twai_service_init();
+            vTaskDelay(100 / portTICK_PERIOD_MS);
+            twai_service_start();
+            // ESP_LOGI(TAG, "Moving forward");
+            // set_motor_speed(left_motor, 1024, true);
+            vTaskDelay(1000 / portTICK_PERIOD_MS);
+            // ESP_LOGI(TAG, "Moving backward");
+            // set_motor_speed(left_motor, 0, true);
+            // vTaskDelay(1000 / portTICK_PERIOD_MS);
+            twai_event = false;
+            twai_active = true;
+        }
         vTaskDelay(1000 / portTICK_PERIOD_MS);
 
         

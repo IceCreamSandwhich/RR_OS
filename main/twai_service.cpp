@@ -1,10 +1,12 @@
 #include "include/twai_service.h"
+#include "driver/gpio.h"
 
 #define TAG "TWAI Service"
 
+
 void twai_service_init()
 {
-    ESP_ERROR_CHECK(twai_driver_install(&gen_config, &timing_config, &filter_config));
+    twai_driver_install(&gen_config, &timing_config, &filter_config);
     ESP_LOGI(TAG, "TWAI Driver Installed");
 }
 void twai_service_start()
@@ -55,3 +57,4 @@ void twai_listener(void)
         return;
     }
 }
+
