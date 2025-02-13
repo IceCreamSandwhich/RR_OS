@@ -1,6 +1,8 @@
 #include "include/led.h"
 #include "esp_log.h"
 
+static led_indicator_handle_t led_handle;
+
 const led_strip_config_t strip_config = {
     .strip_gpio_num = LED_PIN,
     .max_leds = 1,

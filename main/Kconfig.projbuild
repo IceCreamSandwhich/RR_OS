@@ -1,3 +1,13 @@
+menu "Rescue Roller Configuration"
+    config RR_ID
+        int "Rescue Roller ID"
+        range 1 10
+        default 1
+        help
+            This option selects the ID of the rescue roller. The ID must be unique
+            for each rescue roller.
+endmenu
+
 menu "TWAI Interface Configuration"
 
     orsource "$IDF_PATH/examples/common_components/env_caps/$IDF_TARGET/Kconfig.env_caps"

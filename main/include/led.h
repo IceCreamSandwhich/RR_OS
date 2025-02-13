@@ -2,7 +2,6 @@
 
 #include "led_indicator.h"
 
-static led_indicator_handle_t led_handle;
 
 #define BRIGHTNESS 1
 #define LED_PIN 21

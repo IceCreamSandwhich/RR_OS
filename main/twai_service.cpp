@@ -86,7 +86,7 @@ void twai_interrupt_init()
     // Set the TWAI RX pin as an interrupt pin
     gpio_set_intr_type(TWAI_RX, GPIO_INTR_POSEDGE);
     // Install the driver's GPIO ISR handler service, which allows per-pin GPIO interrupt handlers
-    gpio_install_isr_service(0);
+    // gpio_install_isr_service(0); // Already installed for imu
     // Hook up the TWAI RX pin to the ISR handler
     gpio_isr_handler_add(TWAI_RX, twai_service_isr_handler, NULL);
 }

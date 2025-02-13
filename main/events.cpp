@@ -48,4 +48,5 @@ void rr_os_event_handler()
             break;
         }
     }
+    vTaskDelay(100 / portTICK_PERIOD_MS);
 }

@@ -116,7 +116,7 @@ void micro_ros_task(void *arg)
 BaseType_t uros_service(void)
 {
     BaseType_t status;
-    autostatus = xTaskCreate(
+    status = xTaskCreate(
         micro_ros_task,
         "uros_task",
         CONFIG_MICRO_ROS_APP_STACK,

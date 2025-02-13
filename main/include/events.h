@@ -1,6 +1,7 @@
 #pragma once
-#include "freertos/FreeRTOS.h"
 
+#include <stdbool.h>
+#include <inttypes.h>
 
 typedef enum EVENTS {
     EVENT_NONE = 0,
@@ -13,6 +14,9 @@ typedef struct state_t {
     bool twai_active;
     bool connected;
     uint32_t last_isr_time;
+    bool leader;
+    bool imu_enabled;
+    bool led_enabled;
 } state_t;
 
 extern state_t state;
