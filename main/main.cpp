@@ -37,18 +37,11 @@ extern "C" void app_main(void)
     state.connected = false;
     state.twai_active = false;
     state.imu_enabled = true;
-    state.led_enabled = false;
+    state.led_enabled = true;
 
     // Initialising peripherals
     initialise(state);
-    BaseType_t status;
-    status = xTaskCreate(
-        rr_os_event_handler,
-        "rr_os_event_handler",
-        2048,
-        NULL,
-        4,
-        NULL);}
+}
 
 void initialise(state_t state)
 {
@@ -66,4 +59,5 @@ void initialise(state_t state)
     }
     
     initialise_drivetrain();
+    launch_rr_os_service();
 }

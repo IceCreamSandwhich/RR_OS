@@ -4,6 +4,8 @@
 #include "include/twai_service.h"
 #include "include/led.h"
 
+static const char *TAG = "EVENTS";
+
 static QueueHandle_t event_queue;
 state_t state;
 
@@ -48,5 +50,35 @@ void rr_os_event_handler()
             break;
         }
     }
-    vTaskDelay(100 / portTICK_PERIOD_MS);
 }
+
+void rr_os_service(void *pvParameter)
+{
+    while (1)
+    {
+        rr_os_event_handler();
+        vTaskDelay(100 / portTICK_PERIOD_MS);
+    }
+}
+
+void launch_rr_os_service()
+{
+    BaseType_t status;
+    status = xTaskCreate(
+        rr_os_service,
+        "rr_os_event_handler",
+        2048,
+        NULL,
+        4,
+        NULL);
+
+    if (status == pdPASS)
+    {
+        ESP_LOGI(TAG, "service started");
+    }
+    else
+    {
+        ESP_LOGI(TAG, "Error starting the service");
+    }
+}
+

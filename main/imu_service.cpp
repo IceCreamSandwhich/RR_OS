@@ -8,7 +8,6 @@ bno08x_ang_vel_t omega;
 
 static const char *TAG = "IMU";
 
-#define SAMPLE_RATE 100000 // Time between samples in μs
 
 void init_imu()
 {
@@ -19,7 +18,7 @@ void init_imu()
         ESP_LOGE(TAG, "Init failure, returning from main.");
         return;
     }
-    imu.rpt.rv_gyro_integrated.enable(SAMPLE_RATE); // Set report rate in μs
+    imu.rpt.rv_gyro_integrated.enable(100000); // Set report rate in us
 }
 
 void imu_loop(void *pvParameter)
@@ -38,7 +37,7 @@ void imu_loop(void *pvParameter)
         {
             ESP_LOGI(TAG, "No data available");
         }
-        vTaskDelay(SAMPLE_RATE / 100 * portTICK_PERIOD_MS); // Sample rate is in μs
+        vTaskDelay(1 / portTICK_PERIOD_MS);
     }
 }
 

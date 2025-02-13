@@ -24,3 +24,4 @@ extern state_t state;
 void initialise_events();
 void add_event(event_t event);
 void rr_os_event_handler();
+void rr_os_service(void *pvParameter);
