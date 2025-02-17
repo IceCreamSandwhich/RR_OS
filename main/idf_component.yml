@@ -15,3 +15,4 @@ dependencies:
   #   # All dependencies of `main` are public by default.
   #   public: true
   espressif/led_indicator: ^1.0.0
+  jgromes/radiolib: ^7.1.2

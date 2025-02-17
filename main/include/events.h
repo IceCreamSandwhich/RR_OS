@@ -10,16 +10,16 @@ typedef enum EVENTS {
     EVENT_DISCONNECT,
 } event_t;
 
-typedef struct state_t {
+typedef struct rr_state_t {
     bool twai_active;
     bool connected;
     uint32_t last_isr_time;
     bool leader;
     bool imu_enabled;
     bool led_enabled;
-} state_t;
+} rr_state_t;
 
-extern state_t state;
+extern rr_state_t state;
 
 void initialise_events();
 void add_event(event_t event);

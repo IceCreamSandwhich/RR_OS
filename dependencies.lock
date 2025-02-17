@@ -41,9 +41,20 @@ dependencies:
     source:
       type: idf
     version: 5.2.3
+  jgromes/radiolib:
+    component_hash: 833daf5c5dc74c7b5c26e93310af114f978e7002803b2a8a0cd8d78820e06b39
+    dependencies:
+    - name: idf
+      require: private
+      version: '>=4.1'
+    source:
+      registry_url: https://components.espressif.com/
+      type: service
+    version: 7.1.2
 direct_dependencies:
 - espressif/led_indicator
 - idf
-manifest_hash: 99dfa8ad13c9e51c2597c5f3ed45f0df13381888887c6b2cf5b1c199650a83d7
+- jgromes/radiolib
+manifest_hash: 5616641c1d004a3e2e6d4625a382317f92618d288276441d61535f1b20915630
 target: esp32s3
 version: 2.0.0

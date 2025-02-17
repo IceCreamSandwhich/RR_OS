@@ -7,7 +7,7 @@
 static const char *TAG = "EVENTS";
 
 static QueueHandle_t event_queue;
-state_t state;
+rr_state_t state;
 
 void initialise_events() {
     event_queue = xQueueCreate(10, sizeof(event_t));
