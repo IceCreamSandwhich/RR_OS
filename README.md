@@ -2,6 +2,7 @@
 
 ## Requirements
 ESP-IDF 
+
 microROS
 
 ## Getting Started
@@ -31,5 +32,7 @@ idf.py flash
 
 
 Resources:
+
 https://www.freertos.org/Documentation/00-Overview
+
 https://docs.espressif.com/projects/esp-idf/en/v5.4.1/esp32s3/get-started/index.html
