@@ -16,14 +16,14 @@
 #include "BNO08x.hpp"
 
 // Project Headers
-#include "include/pins.h"
-#include "include/drivetrain.hpp"
-#include "include/twai_service.h"
+#include "includes/pins.h"
+#include "includes/drivetrain.hpp"
+#include "includes/twai_service.h"
 //#include "include/uros_service.h"
-#include "include/imu_service.h"
+#include "includes/imu_service.h"
 // #include "include/encoder.h"
-#include "include/led.h"
-#include "include/events.h"
+#include "includes/led.h"
+#include "includes/events.h"
 #include "RadioLibCustomHAL.hpp"
 
 static const constexpr char *TAG = "Main";

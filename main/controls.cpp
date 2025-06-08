@@ -1,4 +1,4 @@
-#include "include/controls.h"
+#include "includes/controls.h"
 #include <math.h>
 
 float compute_omega(float x, float y, float v)
