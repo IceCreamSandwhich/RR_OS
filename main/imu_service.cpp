@@ -1,5 +1,5 @@
-#include "includes/imu_service.h"
-#include "includes/events.h"
+#include "include/imu_service.h"
+#include "include/events.h"
 
 static BNO08x imu;
 bno08x_quat_t quat;
