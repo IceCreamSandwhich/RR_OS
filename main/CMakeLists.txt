@@ -3,4 +3,4 @@ idf_component_register(SRCS "twai_test_main.c" "encoder_service.cpp" "controls.c
                        "events.cpp" "led.cpp"
                        "imu_service.cpp"
                        "RadioLibCustomHAL.hpp"
-                       INCLUDE_DIRS "" "includes")
+                       INCLUDE_DIRS "" "include")
