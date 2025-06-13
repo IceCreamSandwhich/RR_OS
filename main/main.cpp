@@ -50,11 +50,11 @@ extern "C" void app_main(void)
     // initialise_events();
     // state.connected = false;
     // state.twai_active = false;
-    // state.imu_enabled = true;
-    // state.led_enabled = true;
+    state.imu_enabled = true;
+    state.led_enabled = true;
 
     // // Initialising peripherals
-    // initialise(state);
+    initialise(state);
 
 
 }
